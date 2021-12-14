@@ -86,6 +86,7 @@ export default function Home() {
   function travel() {
     seed.value = Date.now();
     setSeed({ value: seed.value });
+    getOwner('');
     console.log('Traveling to', seed.value);
     derive(true);
   }
