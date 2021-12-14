@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import omniGrammar from '../improvgrammar/all';
+import omniGrammar from '../improvGrammar/all';
 import queryString from 'query-string';
 import hashFunction from './hashFunction';
 import { useEffect, useState } from 'react';
