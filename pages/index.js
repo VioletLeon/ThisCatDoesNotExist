@@ -3,6 +3,7 @@ import omniGrammar from '../improvGrammar/all';
 import queryString from 'query-string';
 import hashFunction from '../helperFunctions/hashFunction';
 import { useEffect, useState } from 'react';
+import Cat from '../components/cat';
 
 export default function Home() {
   const [seed, setSeed] = useState({ value: null });
@@ -71,6 +72,10 @@ export default function Home() {
     });
   }
 
+  if (!catColor || !catName) {
+    return <div />;
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -85,11 +90,7 @@ export default function Home() {
             Hello my name is {catName}
           </div>
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-            <div className="cat-face">
-              <div className="cat-eyes"></div>
-              <div className="cat-nose"></div>
-              <div className="cat-mouth"></div>
-            </div>
+            <Cat catColor={catColor} />
           </div>
         </div>
       </main>
