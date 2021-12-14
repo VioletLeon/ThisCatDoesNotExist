@@ -1,0 +1,80 @@
+html {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.4em;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+main nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+footer {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  clear: both;
+}
+
+/* styles */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.5em;
+}
+
+h1,
+h3,
+h5 {
+  font-family: 'Tahoma';
+}
+
+h1,
+h2 {
+  font-size: 2rem;
+}
+h3,
+h4 {
+  font-size: 1.5rem;
+}
+h5,
+h6 {
+  font-size: 1.2rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+strong {
+  font-family: 'Tahoma';
+}
+
+footer {
+  font-size: 0.85rem;
+}

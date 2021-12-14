@@ -1,0 +1,11 @@
+nameOfCat:
+  groups:
+    - tags: [['name']]
+      phrases:
+        - 'Whiska'
+        - 'Whiska Biska'
+        - 'Tallulah'
+        - 'Baguette'
+        - 'Ezra'
+        - 'Leona'
+        - 'Luna'

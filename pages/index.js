@@ -1,82 +1,141 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import makeImprovGenerators from './makeImprovGenerators';
+import omniGrammar from '../improvgrammar/all';
+import Alea from 'alea';
+import queryString from 'query-string';
+import { shuffle } from './util';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [seed, setSeed] = useState({});
+  const [pages, setPages] = useState(4);
+
+  function derive(shouldSetHash) {
+    const newHash = `seed=${seed.value}`;
+    if (shouldSetHash && newHash != window.location.hash) {
+      window.location.hash = newHash;
+    }
+  }
+
+  function travel() {
+    seed.value = Date.now();
+    console.log('Traveling to', seed.value);
+    derive(true);
+  }
+
+  function chunk(len, arr) {
+    var chunks = [],
+      i = 0,
+      n = arr.length;
+    while (i < n) {
+      chunks.push(arr.slice(i, (i += len)));
+    }
+    return chunks;
+  }
+
+  function reactToHash(parsedHash, shouldSetHash) {
+    if (parsedHash.seed && !isNaN(parseInt(parsedHash.seed, 10))) {
+      seed.value = parseInt(parsedHash.seed, 10);
+      console.log('Set seed:', seed.value);
+    }
+    if (parsedHash.pages) {
+      // pages.value = parseInt(parsedHash.pages, 10);
+    }
+    if (seed.value) {
+      derive(shouldSetHash);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    const purposeOptions = omniGrammar.nameOfCat.groups.map(
+      ({ tags, phrases }) => [tags[0], phrases[0]]
+    );
+
+    const initialParsedHash = queryString.parse(window.location.hash);
+
+    if (initialParsedHash.pages) {
+      pages.value = parseInt(initialParsedHash.pages, 10);
+    }
+
+    const numBrandRepetitions = parseInt(
+      initialParsedHash.numBrandRepetitions || '1',
+      10
+    );
+
+    const sections = useEffect(() => {
+      if (!catalog) return [];
+      const alea = new Alea(seed.value);
+      return purposeOptions.map(([tag, title]) => ({
+        title,
+        tags: [tag],
+        brands: chunk(
+          8,
+          shuffle(purposeOptions, alea).flatMap((b) => {
+            return [...Array(numBrandRepetitions)].map((_, i) => ({
+              bindings: { brand: b },
+              key: b.replace(' ', '') + tag.join('') + i,
+            }));
+          })
+        ),
+      }));
+    });
+
+    const catalog = initialParsedHash.catalog || false;
+
+    if (!reactToHash(queryString.parse(window.location.hash), true)) {
+      travel();
+    }
+
+    useEffect(() => {
+      if (!reactToHash(queryString.parse(window.location.hash), true)) {
+        console.log('WHAT IS THIS', sections);
+        travel();
+      }
+      window.onhashchange = () => {
+        reactToHash(queryString.parse(window.location.hash), false);
+      };
+    });
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
-        <title>Create Next App</title>
+        <title>This Cat Does Not Exist</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <main className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
+        <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+          {/* <Entry
+            v-for="b in brandchunks"
+            v-bind:key="b.key"
+            v-bind:bindings="b.bindings"
+            v-bind:tags="s.tags"
+            v-bind:seed="seed + b.key"
+          ></Entry> */}
+        </div>
+        <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+          <div className="cat-face">
+            <div className="cat-eyes"></div>
+            <div className="cat-nose"></div>
+            <div className="cat-mouth"></div>
+          </div>
         </div>
       </main>
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
+      <footer className="flex items-center justify-center w-full h-10 ">
         <a
           className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://github.com/VioletLeon"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
+          Powered by Cats
         </a>
       </footer>
     </div>
-  )
+  );
 }
