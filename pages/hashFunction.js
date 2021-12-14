@@ -1,4 +1,8 @@
 export default function (phrasesArray, seed) {
+  if (!phrasesArray) {
+    return;
+  }
+
   return phrasesArray.filter((phrase, mapIndex) => {
     const length = phrasesArray.length - 1;
     const index = seed % length;
