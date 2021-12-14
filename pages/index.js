@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import omniGrammar from '../improvGrammar/all';
 import queryString from 'query-string';
-import hashFunction from './hashFunction';
+import hashFunction from '../helperFunctions/hashFunction';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
