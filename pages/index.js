@@ -124,19 +124,49 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-left min-h-screen ">
       <Head>
         <title>This Cat Does Not Exist</title>
         <link rel="icon" href="/favicon.ico" />
+        <script
+          src="https://kit.fontawesome.com/779f6ba78c.js"
+          crossorigin="anonymous"
+        ></script>
       </Head>
 
+      <nav className="flex items-center justify-between w-full h-20 bg-blue-300 uppercase text-3xl pl-7 font-mono font-extrabold">
+        <div>This Cat Does Not Exist</div>
+        <div>
+          <a
+            href="https://github.com/VioletLeon/ThisCatDoesNotExist"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="transition duration-300 fab fa-github-square pr-3 hover:text-white "></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/violetleon/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="transition duration-300 fab fa-linkedin pr-7 hover:text-white"></i>
+          </a>
+        </div>
+      </nav>
+
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <button onClick={() => travel()}> Generate new cat</button>
+        <button
+          className="mt-10 rounded-lg px-4 py-2 bg-blue-300 hover:bg-blue-600 text-black  duration-300"
+          onClick={() => travel()}
+        >
+          Generate new cat
+        </button>
         <div className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
             <h1>Hello my name is {catName}</h1>
             {!owner ? (
               <button
+                className="mt-10 rounded-lg px-4 py-2 bg-blue-300 hover:bg-blue-600 text-black  duration-300"
                 onClick={async () => {
                   const ownerName = await prompt("What's your name?");
                   const seedValue = seed.value + '';
@@ -167,7 +197,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="flex items-center justify-center w-full h-10 ">
+      <footer className="flex items-center justify-center w-full h-10">
         <a
           className="flex items-center justify-center"
           href="https://github.com/VioletLeon"
