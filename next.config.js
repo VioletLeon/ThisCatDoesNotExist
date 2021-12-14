@@ -1,6 +1,16 @@
 const withYaml = require('next-plugin-yaml');
+require('dotenv');
 
 module.exports = withYaml({
+  env: {
+    FIREBASEAPIKEY: process.env.FIREBASEAPIKEY,
+    FIREBASEAUTHDOMAIN: process.env.FIREBASEAUTHDOMAIN,
+    FIREBASEPROJECTID: process.env.FIREBASEPROJECTID,
+    FIREBASESTORAGEBUCKET: process.env.FIREBASESTORAGEBUCKET,
+    FIREBASEMESSAGINGSENDERID: process.env.FIREBASEMESSAGINGSENDERID,
+    FIREBASEAPPID: process.env.FIREBASEAPPID,
+    FIREBASEMEASUREMENTID: process.env.FIREBASEMEASUREMENTID,
+  },
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.m?js$/,

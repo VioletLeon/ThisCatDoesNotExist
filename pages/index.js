@@ -4,6 +4,15 @@ import queryString from 'query-string';
 import hashFunction from '../helperFunctions/hashFunction';
 import { useEffect, useState } from 'react';
 import Cat from '../components/cat';
+import db from '../firebase/clientApp';
+import {
+  onSnapshot,
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  getDoc,
+} from 'firebase/firestore';
 
 export default function Home() {
   const [seed, setSeed] = useState({ value: null });
@@ -11,6 +20,8 @@ export default function Home() {
   const [catColor, setColor] = useState('');
   const [eyeColor, setEyeColor] = useState('');
   const [catSpecies, setSpecies] = useState('');
+  const [owner, getOwner] = useState('');
+  const fireStore = db.getFirestore();
 
   useEffect(() => {
     const nameOfCat = hashFunction(
@@ -41,13 +52,28 @@ export default function Home() {
 
     setSpecies(speciesOfCat);
 
-    console.log(
-      'Inside Primary useEffect: ----->',
-      nameOfCat,
-      colorOfCat,
-      eyeColorOfCat,
-      catSpecies
-    );
+    // console.log(
+    //   'Inside Primary useEffect: ----->',
+    //   nameOfCat,
+    //   colorOfCat,
+    //   eyeColorOfCat,
+    //   catSpecies
+    // );
+
+    const getData = async () => {
+      const seedValue = seed.value + '';
+      const ownersRef = doc(fireStore, 'owners', seedValue);
+      const docSnap = await getDoc(ownersRef);
+
+      if (docSnap.exists()) {
+        const payload = docSnap.data();
+        getOwner(payload.payload.ownerName);
+      } else {
+        console.log('No such document');
+      }
+    };
+
+    getData();
   });
 
   function derive(shouldSetHash) {
@@ -83,8 +109,6 @@ export default function Home() {
     }
 
     useEffect(() => {
-      console.log(omniGrammar.nameOfCat.groups);
-
       if (!reactToHash(queryString.parse(window.location.hash), true)) {
         travel();
       }
@@ -110,7 +134,27 @@ export default function Home() {
         <div className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
             <h1>Hello my name is {catName}</h1>
-            <h1>Adopt me!</h1>
+            {!owner ? (
+              <button
+                onClick={async () => {
+                  const ownerName = await prompt("What's your name?");
+                  const seedValue = seed.value + '';
+                  const collectionRef = collection(fireStore, 'owners');
+
+                  const payload = {
+                    ownerName,
+                    seedValue,
+                  };
+
+                  await setDoc(doc(collectionRef, seedValue), { payload });
+                  getOwner(ownerName);
+                }}
+              >
+                Adopt me!
+              </button>
+            ) : (
+              <h2>My owner is: {owner} </h2>
+            )}
           </div>
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
             <Cat

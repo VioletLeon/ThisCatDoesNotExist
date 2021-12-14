@@ -13,6 +13,8 @@
     "@babel/preset-react": "^7.16.5",
     "alea": "^1.0.1",
     "babel-preset-es2015": "^6.24.1",
+    "dotenv": "^10.0.0",
+    "firebase": "^9.6.1",
     "improv": "^1.0.0",
     "next": "latest",
     "query-string": "^7.0.1",
