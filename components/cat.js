@@ -4,12 +4,14 @@ import CatNose from './catNose';
 import CatMouth from './catMouth';
 
 export default function Cat(props) {
+  console.log('main cat com:', props.eyeColor);
+
   return (
     <div>
       <div style={catFaceStyle(props.catColor)}>
         <div style={lowerFace()} />
         <CatEars catColor={props.catColor} />
-        <CatEyes />
+        <CatEyes catEyeColor={props.eyeColor} />
         <CatNose />
         <CatMouth />
       </div>

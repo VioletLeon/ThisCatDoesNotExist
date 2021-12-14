@@ -9,6 +9,8 @@ export default function Home() {
   const [seed, setSeed] = useState({ value: null });
   const [catName, setName] = useState('');
   const [catColor, setColor] = useState('');
+  const [eyeColor, setEyeColor] = useState('');
+  const [catSpecies, setSpecies] = useState('');
 
   useEffect(() => {
     const nameOfCat = hashFunction(
@@ -25,7 +27,27 @@ export default function Home() {
 
     setColor(colorOfCat);
 
-    console.log('Inside Primary useEffect', nameOfCat, colorOfCat);
+    const eyeColorOfCat = hashFunction(
+      omniGrammar.eyeColorOfCat.groups[0].phrases,
+      seed.value
+    )[0];
+
+    setEyeColor(eyeColorOfCat);
+
+    const speciesOfCat = hashFunction(
+      omniGrammar.speciesOfCat.groups[0].phrases,
+      seed.value
+    )[0];
+
+    setSpecies(speciesOfCat);
+
+    console.log(
+      'Inside Primary useEffect: ----->',
+      nameOfCat,
+      colorOfCat,
+      eyeColorOfCat,
+      catSpecies
+    );
   });
 
   function derive(shouldSetHash) {
@@ -87,10 +109,15 @@ export default function Home() {
         <button onClick={() => travel()}> Generate new cat</button>
         <div className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-            Hello my name is {catName}
+            <h1>Hello my name is {catName}</h1>
+            <h1>Adopt me!</h1>
           </div>
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-            <Cat catColor={catColor} />
+            <Cat
+              catColor={catColor}
+              eyeColor={eyeColor}
+              catSpecies={catSpecies}
+            />
           </div>
         </div>
       </main>

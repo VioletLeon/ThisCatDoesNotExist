@@ -1,11 +1,13 @@
 export default function Cat(props) {
+  console.log(props);
+
   return (
     <div style={catEyes()}>
       <div style={outerLeftCatEye()} />
-      <div style={innerLeftCatEye()} />
+      <div style={innerLeftCatEye(props.catEyeColor)} />
       <div style={innerInnerLeftCatEye()} />
       <div style={outerRightCatEye()} />
-      <div style={innerRightCatEye()} />
+      <div style={innerRightCatEye(props.catEyeColor)} />
       <div style={innerInnerRightCatEye()} />
     </div>
   );
@@ -38,7 +40,7 @@ const innerLeftCatEye = (eyeColor) => ({
   content: '',
   width: '22.5px',
   height: '22.5px',
-  backgroundColor: '#DAF7A6 ',
+  backgroundColor: `${eyeColor}`,
   left: '4.5px',
   top: '3.5px',
   borderRadius: '50%',
@@ -73,7 +75,7 @@ const innerRightCatEye = (eyeColor) => ({
   content: '',
   width: '22.5px',
   height: '22.5px',
-  backgroundColor: '#DAF7A6',
+  backgroundColor: `${eyeColor}`,
   right: '4.5px',
   top: '3.5px',
   borderRadius: '50%',
