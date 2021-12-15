@@ -163,10 +163,10 @@ export default function Home() {
               <button
                 className="mt-10 rounded-lg px-4 py-2 bg-blue-300 hover:bg-blue-600 text-black  duration-300"
                 onClick={async () => {
-                  let ownerName = prompt("What's your name?");
+                  let ownerName = window.prompt("What's your name?");
 
                   if (!ownerName) {
-                    ownerName = prompt("What's your name?");
+                    ownerName = window.prompt("What's your name?");
                   }
 
                   const seedValue = seed.value + '';
