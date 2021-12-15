@@ -21,45 +21,23 @@ export default function Home() {
   const [catColor, setColor] = useState('');
   const [eyeColor, setEyeColor] = useState('');
   const [catSpecies, setSpecies] = useState('');
+  const [catAdjective, setAdjective] = useState('');
+  const [catFood, setFood] = useState('');
+  const [catHobby, setHobby] = useState('');
   const [owner, getOwner] = useState('');
   const fireStore = db.getFirestore();
 
   useEffect(() => {
-    const nameOfCat = hashFunction(
-      omniGrammar.nameOfCat.groups[0].phrases,
-      seed.value
-    )[0];
+    const seededCatData = hashFunction(seed.value);
+    console.log('USEEFFECTOBJECT', seededCatData);
 
-    setName(nameOfCat);
-
-    const colorOfCat = hashFunction(
-      omniGrammar.colorOfCat.groups[0].phrases,
-      seed.value
-    )[0];
-
-    setColor(colorOfCat);
-
-    const eyeColorOfCat = hashFunction(
-      omniGrammar.eyeColorOfCat.groups[0].phrases,
-      seed.value
-    )[0];
-
-    setEyeColor(eyeColorOfCat);
-
-    const speciesOfCat = hashFunction(
-      omniGrammar.speciesOfCat.groups[0].phrases,
-      seed.value
-    )[0];
-
-    setSpecies(speciesOfCat);
-
-    // console.log(
-    //   'Inside Primary useEffect: ----->',
-    //   nameOfCat,
-    //   colorOfCat,
-    //   eyeColorOfCat,
-    //   catSpecies
-    // );
+    setName(seededCatData.name);
+    setColor(seededCatData.color);
+    setEyeColor(seededCatData.eyeColor);
+    setSpecies(seededCatData.species);
+    setAdjective(seededCatData.adjectives);
+    setFood(seededCatData.favFood);
+    setHobby(seededCatData.hobbies);
 
     const getData = async () => {
       const seedValue = seed.value + '';
@@ -121,7 +99,7 @@ export default function Home() {
   }
 
   if (!catColor || !catName) {
-    return <div />;
+    return <div>'Test'</div>;
   }
 
   return (
@@ -161,8 +139,8 @@ export default function Home() {
         <div className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-left">
             <h1>
-              Hello my name is {catName}. I'm a {catSpecies} and here is what I
-              like:
+              Hello my name is {catName}. I'm a {catAdjective} {catSpecies} that
+              loves {catHobby} and eating {catFood}
             </h1>
             {!owner ? (
               <button
