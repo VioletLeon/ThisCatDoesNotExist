@@ -144,14 +144,14 @@ export default function Home() {
 
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <button
-          className="mt-10 rounded-lg px-4 py-2 bg-blue-300 hover:bg-blue-600 text-black  duration-300"
+          className="mt-10 mb-10 rounded-lg px-4 py-2 bg-blue-300 hover:bg-blue-600 text-black  duration-300"
           onClick={() => travel()}
         >
           Generate new cat
         </button>
-        <div className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
-          <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-left">
-            <h1>
+        <div className="flex md:flex-row flex-col-reverse items-center justify-center w-full flex-1 px-20 text-center">
+          <div className="flex flex-col md:items-center justify-center md:w-full md:px-20 text-left">
+            <h1 className=" w-52">
               Hello my name is {catName}. I'm{' '}
               {!catAdjective.charAt(1).includes(['a', 'e', 'i', 'o', 'u'])
                 ? 'a '
@@ -163,7 +163,12 @@ export default function Home() {
               <button
                 className="mt-10 rounded-lg px-4 py-2 bg-blue-300 hover:bg-blue-600 text-black  duration-300"
                 onClick={async () => {
-                  const ownerName = await prompt("What's your name?");
+                  let ownerName = prompt("What's your name?");
+
+                  if (!ownerName) {
+                    ownerName = prompt("What's your name?");
+                  }
+
                   const seedValue = seed.value + '';
                   const collectionRef = collection(fireStore, 'owners');
 
@@ -190,7 +195,7 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+          <div className="flex flex-col mb-10 items-center justify-center md:w-full flex-1 md:px-20 text-center">
             <Cat
               catColor={catColor}
               eyeColor={eyeColor}
