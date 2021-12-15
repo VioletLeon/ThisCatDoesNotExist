@@ -1,15 +1,15 @@
 import React from 'react';
-import { FacebookShareButton, FacebookIcon } from 'react-share';
+import { TwitterShareButton, TwitterIcon } from 'react-share';
 
 export default function SocialMediaButtons(props) {
   return (
-    <FacebookShareButton
+    <TwitterShareButton
       url={`https://this-cat-does-not-exist.vercel.app/#seed=${props.seedValue}`}
-      quote={'This Cat Does Not Exist - Adopt Your Own Cat!'}
+      via={'VioletteBunny, Checkout this cat I just adopted!'}
       hashtag="#ThisCatDoesNotExist"
       image={'https://i.imgur.com/qPHk6xa.png'}
     >
-      <FacebookIcon size={36} />
-    </FacebookShareButton>
+      <TwitterIcon size={36} />
+    </TwitterShareButton>
   );
 }

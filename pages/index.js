@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore';
 import confetti from 'canvas-confetti';
 import FaceBookShare from '../components/facebookshare';
+import TwitterShare from '../components/twitterShare';
 
 export default function Home() {
   const [seed, setSeed] = useState({ value: null });
@@ -116,10 +117,7 @@ export default function Home() {
           property="og:description"
           content="Generate a new cat to keep forever!"
         />
-        <meta
-          property="og:image"
-          content="https://this-cat-does-not-exist.vercel.app/catLogoImage.png"
-        />
+        <meta property="og:image" content="https://i.imgur.com/qPHk6xa.png" />
         <title>This Cat Does Not Exist</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -188,6 +186,7 @@ export default function Home() {
               <div>
                 <h2 className="mt-10">My owner is: {owner} </h2>
                 <FaceBookShare seedValue={seed.value} />
+                <TwitterShare seedValue={seed.value} />
               </div>
             )}
           </div>
