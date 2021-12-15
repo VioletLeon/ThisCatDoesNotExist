@@ -13,6 +13,7 @@ import {
   doc,
   getDoc,
 } from 'firebase/firestore';
+import confetti from 'canvas-confetti';
 
 export default function Home() {
   const [seed, setSeed] = useState({ value: null });
@@ -85,10 +86,10 @@ export default function Home() {
 
   function travel() {
     seed.value = Date.now();
-    setSeed({ value: seed.value });
-    getOwner('');
     console.log('Traveling to', seed.value);
     derive(true);
+    setSeed({ value: seed.value });
+    getOwner('');
   }
 
   function reactToHash(parsedHash, shouldSetHash) {
@@ -128,10 +129,6 @@ export default function Home() {
       <Head>
         <title>This Cat Does Not Exist</title>
         <link rel="icon" href="/favicon.ico" />
-        <script
-          src="https://kit.fontawesome.com/779f6ba78c.js"
-          crossorigin="anonymous"
-        ></script>
       </Head>
 
       <nav className="flex items-center justify-between w-full h-20 bg-blue-300 uppercase text-3xl pl-7 font-mono font-extrabold">
@@ -142,14 +139,14 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i className="transition duration-300 fab fa-github-square pr-3 hover:text-white "></i>
+            <i className="fab fa-github-square pr-3 text-black transition duration-300 hover:text-white "></i>
           </a>
           <a
             href="https://www.linkedin.com/in/violetleon/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i class="transition duration-300 fab fa-linkedin pr-7 hover:text-white"></i>
+            <i class="fab fa-linkedin text-black pr-7 transition duration-300  hover:text-white"></i>
           </a>
         </div>
       </nav>
@@ -162,8 +159,11 @@ export default function Home() {
           Generate new cat
         </button>
         <div className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
-          <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-            <h1>Hello my name is {catName}</h1>
+          <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-left">
+            <h1>
+              Hello my name is {catName}. I'm a {catSpecies} and here is what I
+              like:
+            </h1>
             {!owner ? (
               <button
                 className="mt-10 rounded-lg px-4 py-2 bg-blue-300 hover:bg-blue-600 text-black  duration-300"
@@ -179,12 +179,16 @@ export default function Home() {
 
                   await setDoc(doc(collectionRef, seedValue), { payload });
                   getOwner(ownerName);
+
+                  confetti({
+                    spread: 180,
+                  });
                 }}
               >
                 Adopt me!
               </button>
             ) : (
-              <h2>My owner is: {owner} </h2>
+              <h2 className="mt-10">My owner is: {owner} </h2>
             )}
           </div>
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
