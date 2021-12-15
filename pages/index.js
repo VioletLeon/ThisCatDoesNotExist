@@ -105,6 +105,20 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-left min-h-screen ">
       <Head>
+        <meta
+          property="og:url"
+          content="https://this-cat-does-not-exist.vercel.app/"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="This Cat Does Not Exist" />
+        <meta
+          property="og:description"
+          content="Generate a new cat to keep forever!"
+        />
+        <meta
+          property="og:image"
+          content="https://this-cat-does-not-exist.vercel.app/catLogoImage.png"
+        />
         <title>This Cat Does Not Exist</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -139,8 +153,12 @@ export default function Home() {
         <div className="flex flex-row items-center justify-center w-full flex-1 px-20 text-center">
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-left">
             <h1>
-              Hello my name is {catName}. I'm a {catAdjective} {catSpecies} that
-              loves {catHobby} and eating {catFood}
+              Hello my name is {catName}. I'm{' '}
+              {!catAdjective.charAt(1).includes(['a', 'e', 'i', 'o', 'u'])
+                ? 'a '
+                : 'an '}
+              {catAdjective} {catSpecies} that loves {catHobby} and eating{' '}
+              {catFood}
             </h1>
             {!owner ? (
               <button
