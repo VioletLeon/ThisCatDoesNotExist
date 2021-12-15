@@ -4,7 +4,7 @@ This was created for a 3 day "hackaton" for Full Stack Academy Cohort 2109. The 
 
 This means that the same cat will be rendered everytime that specific seed is referenced.
 
-# Technologies used
+## Technologies used
 
 - React-JS
 - Next.JS
@@ -13,14 +13,14 @@ This means that the same cat will be rendered everytime that specific seed is re
 - Babel
 - YAML
 
-# Features to be added
+## Features to be added
 
 - Account feature (using Firestore) to see all the cats you've adopted.
 - Travel to this ${specificNumber} seed, to view a specific cat.
 - Adding more to the cats CSS styling (like a body).
 - Generating a lot more random text and descriptions using Improv node module.
 
-# Some of my favorite cats
+## Some of my favorite cats
 
 <img src="./Cat1.jpg">
 <img src="./Cat2.jpg">
