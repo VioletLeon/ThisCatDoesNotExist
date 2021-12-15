@@ -14,6 +14,7 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import confetti from 'canvas-confetti';
+import FaceBookShare from '../components/facebookshare';
 
 export default function Home() {
   const [seed, setSeed] = useState({ value: null });
@@ -184,7 +185,10 @@ export default function Home() {
                 Adopt me!
               </button>
             ) : (
-              <h2 className="mt-10">My owner is: {owner} </h2>
+              <div>
+                <h2 className="mt-10">My owner is: {owner} </h2>
+                <FaceBookShare seedValue={seed.value} />
+              </div>
             )}
           </div>
           <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
